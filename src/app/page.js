@@ -1,16 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Component() {
   // Create state object to store form information in
   // prior to submitting to Twilio API
+  const [tollFreeNumbers, setTollFreeNumbers] = useState([])
+  const [isLoading, setLoading] = useState(true)
+
+  useEffect(() => {
+
+    fetch('/api/submitRequest')
+      .then((res) => res.json())
+      .then((data) => {
+        setTollFreeNumbers(data.message);
+        setLoading(false);
+        console.log(data);
+      })
+
+  }, []);
+
   const [formValues, setFormValues] = useState({
     businessName: "",
     businessWebsite: "",
@@ -18,20 +34,20 @@ export default function Component() {
     businessAddress2: "",
     businessCity: "",
     businessState: "",
-    businessZipCode: "",
-    firstName: "",
-    lastName: "",
-    email: "",
+    businessPostalCode: "",
+    businessContactFirstName: "",
+    businessContactLastName: "",
+    businessContactEmail: "",
     phoneNumber: "",
-    useCaseCategory: "",
+    useCaseCategories: "",
     useCaseSummary: "",
     messageSample: "",
     optInType: "",
-    optInImageUrl: "",
-    monthlyMessagingVolume: "",
+    optInImageUrls: "",
+    messageVolume: "",
     additionalInformation: "",
-    selectedPhoneNumber: "",
-    notificationsEmail: ""
+    tollfreePhoneNumberSid: "",
+    notificationEmail: ""
   });
 
   // U.S. states and territories to populate the form with
@@ -55,7 +71,7 @@ export default function Component() {
 
   // Valid Opt-in Types
   const optInTypes = { VERBAL: "Verbal", WEB_FORM: "Web Form", PAPER_FORM: "Paper Form", VIA_TEXT: "Via Text Message", MOBILE_QR_CODE: "Mobile QR Code" };
-  const monthlyMessagingVolumes = ["10", "1,000", "10,000", "100,000", "250,000", "500,000", "750,000", "1,000,000", "5,000,000", "10,000,000+"];
+  const messageVolumes = ["10", "1,000", "10,000", "100,000", "250,000", "500,000", "750,000", "1,000,000", "5,000,000", "10,000,000+"];
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -67,11 +83,19 @@ export default function Component() {
     setFormValues({ ...formValues, [field]: value });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic here
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     console.log(formValues);
-  };
+    const response = await fetch('/api/submitRequest', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formValues),
+    });
+    const result = await response.json();
+    console.log(result);
+  }
 
   return (
     <div className="container mx-auto max-w-4xl px-4 py-12 md:px-6 lg:px-8" style={{ backgroundColor: "#121C2D" }}>
@@ -148,12 +172,12 @@ export default function Component() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="businessZipCode" className="text-[#C9CCD7]">
+                <Label htmlFor="businessPostalCode" className="text-[#C9CCD7]">
                   Zip Code
                 </Label>
                 <Input 
-                  id="businessZipCode"
-                  name="businessZipCode"
+                  id="businessPostalCode"
+                  name="businessPostalCode"
                   onChange={handleChange}
                   placeholder="Enter zip code"
                   className="bg-[#F4F4F6]"
@@ -166,22 +190,22 @@ export default function Component() {
             <div className="space-y-6">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName" className="text-[#C9CCD7]">
+                  <Label htmlFor="businessContactFirstName" className="text-[#C9CCD7]">
                     First Name
                   </Label>
-                  <Input onChange={handleChange} id="firstName" placeholder="Enter first name" className="bg-[#F4F4F6]" />
+                  <Input onChange={handleChange} id="businessContactFirstName" placeholder="Enter first name" className="bg-[#F4F4F6]" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="lastName" className="text-[#C9CCD7]">
+                  <Label htmlFor="businessContactLastName" className="text-[#C9CCD7]">
                     Last Name
                   </Label>
-                  <Input onChange={handleChange} id="lastName" placeholder="Enter last name" className="bg-[#F4F4F6]" />
+                  <Input onChange={handleChange} id="businessContactLastName" placeholder="Enter last name" className="bg-[#F4F4F6]" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-[#C9CCD7]">
-                    Email
+                  <Label htmlFor="businessContactEmail" className="text-[#C9CCD7]">
+                    Business Contact Email
                   </Label>
-                  <Input onChange={handleChange} id="email" type="email" placeholder="Enter email" className="bg-[#F4F4F6]" />
+                  <Input onChange={handleChange} id="businessContactEmail" type="email" placeholder="Enter email" className="bg-[#F4F4F6]" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="phoneNumber" className="text-[#C9CCD7]">
@@ -196,14 +220,14 @@ export default function Component() {
             <h2 className="mb-4 text-xl font-bold text-[#C9CCD7]">Use Case</h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
-                <Label htmlFor="useCaseCategory" className="text-[#C9CCD7]">
+                <Label htmlFor="useCaseCategories" className="text-[#C9CCD7]">
                   Use Case Category
                 </Label>
                 <Select 
-                  id="useCaseCategory"
-                  name="useCaseCategory"
-                  value={formValues.useCaseCategory}
-                  onValueChange={handleSelectChange('useCaseCategory')}
+                  id="useCaseCategories"
+                  name="useCaseCategories"
+                  value={formValues.useCaseCategories}
+                  onValueChange={handleSelectChange('useCaseCategories')}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select a category" />
@@ -256,21 +280,21 @@ export default function Component() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="optInImageUrl" className="text-[#C9CCD7]">
+              <Label htmlFor="optInImageUrls" className="text-[#C9CCD7]">
                 Opt-In Image URL
               </Label>
-              <Input onChange={handleChange} id="optInImageUrl" name="optInImageUrl" placeholder="Enter an image URL" className="bg-[#F4F4F6]" />
+              <Input onChange={handleChange} id="optInImageUrls" name="optInImageUrls" placeholder="Enter an image URL" className="bg-[#F4F4F6]" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="monthlyMessagingVolume" className="text-[#C9CCD7]">
+              <Label htmlFor="messageVolume" className="text-[#C9CCD7]">
                 Monthly Messaging Volume
               </Label>
-              <Select id="monthlyMessagingVolume" name="monthlyMessagingVolume" onValueChange={handleSelectChange('monthlyMessagingVolume')} value={formValues.monthlyMessagingVolume}>
+              <Select id="messageVolume" name="messageVolume" onValueChange={handleSelectChange('messageVolume')} value={formValues.messageVolume}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a monthly volume" />
                 </SelectTrigger>
                 <SelectContent>
-                  {monthlyMessagingVolumes.map((volume) => (
+                  {messageVolumes.map((volume) => (
                       <SelectItem key={volume} value={volume}>{volume}</SelectItem>
                   ))}
                 </SelectContent>
@@ -296,29 +320,30 @@ export default function Component() {
               <Label htmlFor="phoneNumbers" className="text-[#C9CCD7]">
                 Phone Numbers
               </Label>
-              <Select id="phoneNumbers" multiple>
+              <Select id="phoneNumbers" name="tollfreePhoneNumberSid" onValueChange={handleSelectChange('tollfreePhoneNumberSid')} value={formValues.tollfreePhoneNumberSid}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select phone numbers" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="+1234567890">+1 (234) 567-890</SelectItem>
-                  <SelectItem value="+1987654321">+1 (987) 654-321</SelectItem>
-                  <SelectItem value="+1555123456">+1 (555) 123-456</SelectItem>
-                  <SelectItem value="+1888999888">+1 (888) 999-888</SelectItem>
-                </SelectContent>
+                  <SelectContent>
+                    { isLoading ? <SelectItem key="test" value="test">Nothing in here</SelectItem> : (
+                      Object.entries(tollFreeNumbers).map(([key, value]) => (
+                        <SelectItem value={key} key={key}>{value}</SelectItem>
+                      ))
+                    )}
+                  </SelectContent>
               </Select>
             </div>
           </div>
           <div>
             <h2 className="mb-4 text-xl font-bold text-[#C9CCD7]">Notifications</h2>
             <div className="space-y-2">
-              <Label htmlFor="notificationsEmail" className="text-[#C9CCD7]">
+              <Label htmlFor="notificationEmail" className="text-[#C9CCD7]">
                 Notifications Email
               </Label>
               <Input
                 onChange={handleChange}
-                id="notificationsEmail"
-                name="notificationsEmail"
+                id="notificationEmail"
+                name="notificationEmail"
                 type="email"
                 placeholder="Enter email for notifications"
                 className="bg-[#F4F4F6]"
@@ -329,6 +354,7 @@ export default function Component() {
             <Button type="submit" className="bg-[#51A9E3] hover:bg-[#51A9E3]/90">
               Submit
             </Button>
+            <Link href="NextPage">Link me</Link>
           </div>
         </div>
       </form>
