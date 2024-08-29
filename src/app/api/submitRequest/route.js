@@ -8,27 +8,33 @@ require('dotenv').config();
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 
+// Instantiating Twilio Client SDK
 const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
-
-const tollFreeNumbers = {}; // All toll free numbers in the account regardless of status
 
 export async function POST(request) { 
   try {
     const req = await request.json()
-
-    return NextResponse.json({ success: true, error: false}, { status: 200 });
-
+    
+    console.log(req);
+    // TODO: use object destructuring to assign request parameters
+    
     // TODO: Make request to Twilo KYC API to submit
-
-
-    // Make the Twilio API call
+    const tollFreeVerification = await client.messaging.v1.tollfreeVerifications.create(req);
+    console.log(tollFreeVerification);
+    
+    // route user to new page
+    return NextResponse.json({ success: true, error: false}, { status: 200 });
+  
+  
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ success: false, error: error.message}, { status: 500 });
   }
 }
 
 // Returns a list of Toll Free numbers without a verification
 export async function GET(request) {
+  const tollFreeNumbers = {}; // All toll free numbers in the account regardless of status
 
   const incomingPhoneNumbers = await client.incomingPhoneNumbers.list({
     limit: 1000,
@@ -36,11 +42,8 @@ export async function GET(request) {
   });
 
   incomingPhoneNumbers.forEach((i) => {
-    // Match only toll free numbers
-    const regex = new RegExp(/^\+18(00|88|77|66|55|44|33|22)[0-9]+$/, 'gmi');
-    if (i.phoneNumber.match(regex)) {
-      tollFreeNumbers[i.sid] = i.phoneNumber;
-    }
+    const regex = new RegExp(/^\+18(00|88|77|66|55|44|33|22)[0-9]+$/, 'gmi'); // Matches only toll free numbers
+    if (i.phoneNumber.match(regex)) { tollFreeNumbers[i.sid] = i.phoneNumber; } 
   });
 
   const tollFreeRegistrations = await client.messaging.v1.tollfreeVerifications.list(
@@ -48,6 +51,8 @@ export async function GET(request) {
     { limit: 50 }
   );
 
+  // TODO: Need to verify that numbers with a rejected verification are not deleted.
+  // A User may want to resubmit a new Verification Request so number needs to be displayed in form.
   tollFreeRegistrations.forEach((i) => {
     if (tollFreeNumbers[i.tollfreePhoneNumberSid]) {
       delete tollFreeNumbers[i.tollfreePhoneNumberSid];
