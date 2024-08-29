@@ -41,7 +41,7 @@ export default function Component() {
     phoneNumber: "",
     useCaseCategories: "",
     useCaseSummary: "",
-    messageSample: "",
+    productionMessageSample: "",
     optInType: "",
     optInImageUrls: "",
     messageVolume: "",
@@ -254,10 +254,10 @@ export default function Component() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="messageSample" className="text-[#C9CCD7]">
+              <Label htmlFor="productionMessageSample" className="text-[#C9CCD7]">
                 Message Sample
               </Label>
-              <Textarea onChange={handleChange} id="messageSample" name="messageSample" placeholder="Enter a sample message" rows={4} className="bg-[#F4F4F6]" />
+              <Textarea onChange={handleChange} id="productionMessageSample" name="productionMessageSample" placeholder="Enter a sample message" rows={4} className="bg-[#F4F4F6]" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="opt-in-type" className="text-[#C9CCD7]">
@@ -325,7 +325,7 @@ export default function Component() {
                   <SelectValue placeholder="Select phone numbers" />
                 </SelectTrigger>
                   <SelectContent>
-                    { isLoading ? <SelectItem key="test" value="test">Nothing in here</SelectItem> : (
+                    { isLoading ? <SelectItem key="test" value="test">Still Loading...</SelectItem> : (
                       Object.entries(tollFreeNumbers).map(([key, value]) => (
                         <SelectItem value={key} key={key}>{value}</SelectItem>
                       ))
