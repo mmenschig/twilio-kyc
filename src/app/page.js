@@ -98,26 +98,26 @@ export default function Component() {
   }
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-12 md:px-6 lg:px-8" style={{ backgroundColor: "#121C2D" }}>
+    <div className="container mx-auto max-w-4xl px-4 py-12 md:px-6 lg:px-8">
       <form onSubmit={handleSubmit}>
-        <h1 className="mb-8 text-3xl font-bold text-[#C9CCD7]">Register your Business for Messaging and Voice</h1>
-        <p className="mb-8 text-[#C9CCD7]">
+        <h1 className="mb-8 text-3xl font-bold">Register your Business for Messaging and Voice</h1>
+        <p className="mb-8">
           We are proud to offer advanced voice and messaging capabilites to our customers. Submit your business
           information below to register for Verified Toll-Free messaging as well as advanced voice calling features such
           as Shaken/STIR.
         </p>
         <div className="space-y-8">
           <div>
-            <h2 className="mb-4 text-xl font-bold text-[#C9CCD7]">Business Information</h2>
+            <h2 className="mb-4 text-xl font-bold">Business Information</h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
-                <Label htmlFor="businessName" className="text-[#C9CCD7]">
+                <Label htmlFor="businessName" className="">
                   Business Name
                 </Label>
                 <Input onChange={handleChange} id="businessName" placeholder="e.g. Twilio Inc." className="bg-[#F4F4F6]" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="businessWebsite" className="text-[#C9CCD7]">
+                <Label htmlFor="businessWebsite" className="">
                   Business Website
                 </Label>
                 <Input onChange={handleChange} id="businessWebsite" placeholder="Enter business website" className="bg-[#F4F4F6]" />
@@ -125,16 +125,16 @@ export default function Component() {
             </div>
           </div>
           <div>
-            <h2 className="mb-4 text-xl font-bold text-[#C9CCD7]">Business Address</h2>
+            <h2 className="mb-4 text-xl font-bold">Business Address</h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
-                <Label htmlFor="businessAddress1" className="text-[#C9CCD7]">
+                <Label htmlFor="businessAddress1" className="">
                   Street Address 1
                 </Label>
                 <Input onChange={handleChange} id="businessAddress1"  placeholder="Enter street address 1" className="bg-[#F4F4F6]" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="businessAddress2" className="text-[#C9CCD7]">
+                <Label htmlFor="businessAddress2" className="">
                   Street Address 2
                 </Label>
                 <Input 
@@ -146,13 +146,13 @@ export default function Component() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="businessCity" className="text-[#C9CCD7]">
+                <Label htmlFor="businessCity" className="">
                   City
                 </Label>
                 <Input onChange={handleChange} id="businessCity"  placeholder="Enter city" className="bg-[#F4F4F6]" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="businessState" className="text-[#C9CCD7]">
+                <Label htmlFor="businessState" className="">
                   State
                 </Label>
                 <Select
@@ -172,7 +172,7 @@ export default function Component() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="businessPostalCode" className="text-[#C9CCD7]">
+                <Label htmlFor="businessPostalCode" className="">
                   Zip Code
                 </Label>
                 <Input 
@@ -186,29 +186,29 @@ export default function Component() {
             </div>
           </div>
           <div>
-            <h2 className="mb-4 text-xl font-bold text-[#C9CCD7]">Business Contact</h2>
+            <h2 className="mb-4 text-xl font-bold">Business Contact</h2>
             <div className="space-y-6">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="space-y-2">
-                  <Label htmlFor="businessContactFirstName" className="text-[#C9CCD7]">
+                  <Label htmlFor="businessContactFirstName" className="">
                     First Name
                   </Label>
                   <Input onChange={handleChange} id="businessContactFirstName" placeholder="Enter first name" className="bg-[#F4F4F6]" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="businessContactLastName" className="text-[#C9CCD7]">
+                  <Label htmlFor="businessContactLastName" className="">
                     Last Name
                   </Label>
                   <Input onChange={handleChange} id="businessContactLastName" placeholder="Enter last name" className="bg-[#F4F4F6]" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="businessContactEmail" className="text-[#C9CCD7]">
+                  <Label htmlFor="businessContactEmail" className="">
                     Business Contact Email
                   </Label>
                   <Input onChange={handleChange} id="businessContactEmail" type="email" placeholder="Enter email" className="bg-[#F4F4F6]" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phoneNumber" className="text-[#C9CCD7]">
+                  <Label htmlFor="phoneNumber" className="]">
                     Phone Number
                   </Label>
                   <Input onChange={handleChange} id="phoneNumber" placeholder="Enter phone number" className="bg-[#F4F4F6]" />
@@ -217,10 +217,10 @@ export default function Component() {
             </div>
           </div>
           <div>
-            <h2 className="mb-4 text-xl font-bold text-[#C9CCD7]">Use Case</h2>
+            <h2 className="mb-4 text-xl font-bold">Use Case</h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
-                <Label htmlFor="useCaseCategories" className="text-[#C9CCD7]">
+                <Label htmlFor="useCaseCategories" className="">
                   Use Case Category
                 </Label>
                 <Select 
@@ -230,7 +230,7 @@ export default function Component() {
                   onValueChange={handleSelectChange('useCaseCategories')}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a category" />
+                    <SelectValue placeholder="Select a category" className="bg-[#F4F4F6]" />
                   </SelectTrigger>
                   <SelectContent>
                   {Object.entries(useCaseCategories).map(([key, value]) => (
@@ -241,7 +241,7 @@ export default function Component() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="useCaseSummary" className="text-[#C9CCD7]">
+              <Label htmlFor="useCaseSummary" className="">
                 Use Case Summary
               </Label>
               <Textarea
@@ -254,13 +254,13 @@ export default function Component() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="productionMessageSample" className="text-[#C9CCD7]">
+              <Label htmlFor="productionMessageSample" className="">
                 Message Sample
               </Label>
               <Textarea onChange={handleChange} id="productionMessageSample" name="productionMessageSample" placeholder="Enter a sample message" rows={4} className="bg-[#F4F4F6]" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="opt-in-type" className="text-[#C9CCD7]">
+              <Label htmlFor="opt-in-type" className="">
                 Opt-In Type
               </Label>
               <Select 
@@ -280,13 +280,13 @@ export default function Component() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="optInImageUrls" className="text-[#C9CCD7]">
+              <Label htmlFor="optInImageUrls" className="">
                 Opt-In Image URL
               </Label>
               <Input onChange={handleChange} id="optInImageUrls" name="optInImageUrls" placeholder="Enter an image URL" className="bg-[#F4F4F6]" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="messageVolume" className="text-[#C9CCD7]">
+              <Label htmlFor="messageVolume" className="">
                 Monthly Messaging Volume
               </Label>
               <Select id="messageVolume" name="messageVolume" onValueChange={handleSelectChange('messageVolume')} value={formValues.messageVolume}>
@@ -301,7 +301,7 @@ export default function Component() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="additionalInformation" className="text-[#C9CCD7]">
+              <Label htmlFor="additionalInformation" className="">
                 Additional Information
               </Label>
               <Textarea
@@ -315,9 +315,9 @@ export default function Component() {
             </div>
           </div>
           <div>
-            <h2 className="mb-4 text-xl font-bold text-[#C9CCD7]">Select Phone Number to Register</h2>
+            <h2 className="mb-4 text-xl font-bold">Select Phone Number to Register</h2>
             <div className="space-y-2">
-              <Label htmlFor="phoneNumbers" className="text-[#C9CCD7]">
+              <Label htmlFor="phoneNumbers" className="">
                 Phone Numbers
               </Label>
               <Select id="phoneNumbers" name="tollfreePhoneNumberSid" onValueChange={handleSelectChange('tollfreePhoneNumberSid')} value={formValues.tollfreePhoneNumberSid}>
@@ -335,9 +335,9 @@ export default function Component() {
             </div>
           </div>
           <div>
-            <h2 className="mb-4 text-xl font-bold text-[#C9CCD7]">Notifications</h2>
+            <h2 className="mb-4 text-xl font-bold">Notifications</h2>
             <div className="space-y-2">
-              <Label htmlFor="notificationEmail" className="text-[#C9CCD7]">
+              <Label htmlFor="notificationEmail" className="">
                 Notifications Email
               </Label>
               <Input
@@ -351,10 +351,9 @@ export default function Component() {
             </div>
           </div>
           <div className="flex justify-end">
-            <Button type="submit" className="bg-[#51A9E3] hover:bg-[#51A9E3]/90">
+            <Button type="submit" className="bg-[#121C2D] hover:bg-[#121C2D]/90">
               Submit
             </Button>
-            <Link href="NextPage">Link me</Link>
           </div>
         </div>
       </form>

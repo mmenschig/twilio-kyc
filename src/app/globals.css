@@ -74,3 +74,16 @@
       @apply bg-background text-foreground;
     }
   }
+
+
+  h2 {
+    color: #121C2D;
+  }
+
+  .space-y-2 {
+    margin-bottom: 1rem;
+  }
+
+  .space-y-2 > button {
+    background-color: #F4F4F6;
+  }
