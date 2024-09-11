@@ -16,7 +16,6 @@ export async function POST(request) {
     const req = await request.json()
     
     console.log(req);
-    // TODO: use object destructuring to assign request parameters
     
     // TODO: Make request to Twilo KYC API to submit
     const tollFreeVerification = await client.messaging.v1.tollfreeVerifications.create(req);

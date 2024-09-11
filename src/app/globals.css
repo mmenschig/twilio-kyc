@@ -74,7 +74,10 @@
       @apply bg-background text-foreground;
     }
   }
-
+label.text-sm > button {
+  vertical-align: top;
+  margin: 5px;
+}
 
   h2 {
     color: #121C2D;

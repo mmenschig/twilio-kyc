@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button";
 
@@ -38,15 +37,16 @@ export default function Component() {
   const [formValues, setFormValues] = useState({
     businessName: "",
     businessWebsite: "",
-    businessAddress1: "",
-    businessAddress2: "",
+    businessStreetAddress: "",
+    businessStreetAddress2: "",
     businessCity: "",
-    businessState: "",
+    businessStateProvinceRegion: "",
     businessPostalCode: "",
     businessContactFirstName: "",
     businessContactLastName: "",
     businessContactEmail: "",
-    phoneNumber: "",
+    businessContactPhone: "",
+    businessCountry: "US",
     useCaseCategories: "",
     useCaseSummary: "",
     productionMessageSample: "",
@@ -140,22 +140,27 @@ export default function Component() {
           <div>
             <h2 className="mb-4 text-xl font-bold">
               Business Address
-              <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
             </h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
-                <Label htmlFor="businessAddress1" className="">
+                <Label htmlFor="businessStreetAddress" className="">
                   Street Address 1
                 </Label>
-                <Input required onChange={handleChange} id="businessAddress1"  placeholder="Enter street address 1" className="bg-[#F4F4F6]" />
+                <Input required 
+                  onChange={handleChange} 
+                  id="businessStreetAddress" 
+                  name="businessStreetAddress"
+                  placeholder="Enter street address 1"
+                  className="bg-[#F4F4F6]" 
+                />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="businessAddress2" className="">
+                <Label htmlFor="businessStreetAddress2" className="">
                   Street Address 2
                 </Label>
                 <Input 
-                  id="businessAddress2"
-                  name="businessAddress2" 
+                  id="businessStreetAddress2"
+                  name="businessStreetAddress2" 
                   onChange={handleChange} 
                   placeholder="Enter street address 2" 
                   className="bg-[#F4F4F6]" 
@@ -168,13 +173,13 @@ export default function Component() {
                 <Input required onChange={handleChange} id="businessCity"  placeholder="Enter city" className="bg-[#F4F4F6]" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="businessState" className="">
+                <Label htmlFor="businessStateProvinceRegion" className="">
                   State
                 </Label>
                 <Select required
-                  id="businessState"
-                  name="businessState"
-                  onValueChange={handleSelectChange('businessState')}
+                  id="businessStateProvinceRegion"
+                  name="businessStateProvinceRegion"
+                  onValueChange={handleSelectChange('businessStateProvinceRegion')}
                 >
                   <SelectTrigger>
                     <SelectValue  placeholder="Select state" />
@@ -225,10 +230,10 @@ export default function Component() {
                   <Input required onChange={handleChange} id="businessContactEmail" type="email" placeholder="Enter email" className="bg-[#F4F4F6]" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phoneNumber" className="]">
+                  <Label htmlFor="businessContactPhone" className="]">
                     Phone Number
                   </Label>
-                  <Input required onChange={handleChange} id="phoneNumber" placeholder="Enter phone number" className="bg-[#F4F4F6]" />
+                  <Input required onChange={handleChange} id="businessContactPhone" placeholder="Enter phone number" className="bg-[#F4F4F6]" />
                 </div>
               </div>
             </div>
@@ -351,7 +356,7 @@ export default function Component() {
           <div>
             <h2 className="mb-4 text-xl font-bold">Select Phone Number to Register</h2>
             <div className="space-y-2">
-              <Label htmlFor="phoneNumbers" className="">
+              <Label htmlFor="businessContactPhones" className="">
                 Phone Numbers
                 <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
               </Label>
