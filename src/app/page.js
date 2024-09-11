@@ -1,20 +1,28 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+
+// Custom Components
+import { TooltipWithIcon } from "../components/custom/TooltipWithIcon"
+
+// App Router
+import { useRouter } from "next/navigation"; // App router
+
+// Icons
+import { Info } from 'lucide-react';
 
 export default function Component() {
   // Create state object to store form information in
   // prior to submitting to Twilio API
   const [tollFreeNumbers, setTollFreeNumbers] = useState([])
   const [isLoading, setLoading] = useState(true)
-
+  const router = useRouter();
   useEffect(() => {
 
     fetch('/api/submitRequest')
@@ -83,9 +91,12 @@ export default function Component() {
     setFormValues({ ...formValues, [field]: value });
   };
 
+  const handleReset = () => {
+    document.getElementById('tollFreeForm').reset();
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formValues);
     const response = await fetch('/api/submitRequest', {
       method: 'POST',
       headers: {
@@ -93,19 +104,19 @@ export default function Component() {
       },
       body: JSON.stringify(formValues),
     });
-    const result = await response.json();
-    console.log(result);
+    // Routing to success or error page
+    response.status == 200 ? router.push('/submission/success') : router.push('/submission/error')
   }
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-12 md:px-6 lg:px-8">
-      <form onSubmit={handleSubmit}>
-        <h1 className="mb-8 text-3xl font-bold">Register your Business for Messaging and Voice</h1>
+    <div className="container my-10 border-2 rounded-md border-slate-100 mx-auto max-w-4xl px-4 py-6 md:px-6 lg:px-8">
+      <form id="tollFreeForm" onSubmit={handleSubmit} onReset={handleReset}>
+        <h1 className="mb-8 text-3xl font-bold">Register your Business for Toll-Free Messaging</h1>
         <p className="mb-8">
-          We are proud to offer advanced voice and messaging capabilites to our customers. Submit your business
-          information below to register for Verified Toll-Free messaging as well as advanced voice calling features such
-          as Shaken/STIR.
+          Submit your business information below to register for Verified Toll-Free messaging. We are actively working on
+          supporting additional Twilio products in the future.
         </p>
+
         <div className="space-y-8">
           <div>
             <h2 className="mb-4 text-xl font-bold">Business Information</h2>
@@ -113,25 +124,30 @@ export default function Component() {
               <div className="space-y-2">
                 <Label htmlFor="businessName" className="">
                   Business Name
+                  <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
                 </Label>
-                <Input onChange={handleChange} id="businessName" placeholder="e.g. Twilio Inc." className="bg-[#F4F4F6]" />
+                <Input required onChange={handleChange} id="businessName" placeholder="e.g. Twilio Inc." className="bg-[#F4F4F6]" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="businessWebsite" className="">
                   Business Website
+                  <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
                 </Label>
-                <Input onChange={handleChange} id="businessWebsite" placeholder="Enter business website" className="bg-[#F4F4F6]" />
+                <Input required onChange={handleChange} id="businessWebsite" placeholder="Enter business website" className="bg-[#F4F4F6]" />
               </div>
             </div>
           </div>
           <div>
-            <h2 className="mb-4 text-xl font-bold">Business Address</h2>
+            <h2 className="mb-4 text-xl font-bold">
+              Business Address
+              <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
+            </h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
                 <Label htmlFor="businessAddress1" className="">
                   Street Address 1
                 </Label>
-                <Input onChange={handleChange} id="businessAddress1"  placeholder="Enter street address 1" className="bg-[#F4F4F6]" />
+                <Input required onChange={handleChange} id="businessAddress1"  placeholder="Enter street address 1" className="bg-[#F4F4F6]" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="businessAddress2" className="">
@@ -149,20 +165,19 @@ export default function Component() {
                 <Label htmlFor="businessCity" className="">
                   City
                 </Label>
-                <Input onChange={handleChange} id="businessCity"  placeholder="Enter city" className="bg-[#F4F4F6]" />
+                <Input required onChange={handleChange} id="businessCity"  placeholder="Enter city" className="bg-[#F4F4F6]" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="businessState" className="">
                   State
                 </Label>
-                <Select
+                <Select required
                   id="businessState"
                   name="businessState"
-                  value={formValues.businessState}
                   onValueChange={handleSelectChange('businessState')}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select state" />
+                    <SelectValue  placeholder="Select state" />
                   </SelectTrigger>
                     <SelectContent>
                       {Object.entries(states).map(([key, value]) => (
@@ -175,7 +190,7 @@ export default function Component() {
                 <Label htmlFor="businessPostalCode" className="">
                   Zip Code
                 </Label>
-                <Input 
+                <Input required
                   id="businessPostalCode"
                   name="businessPostalCode"
                   onChange={handleChange}
@@ -186,47 +201,51 @@ export default function Component() {
             </div>
           </div>
           <div>
-            <h2 className="mb-4 text-xl font-bold">Business Contact</h2>
+            <h2 className="mb-4 text-xl font-bold">
+              Business Contact
+            </h2>
             <div className="space-y-6">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="space-y-2">
                   <Label htmlFor="businessContactFirstName" className="">
                     First Name
                   </Label>
-                  <Input onChange={handleChange} id="businessContactFirstName" placeholder="Enter first name" className="bg-[#F4F4F6]" />
+                  <Input required onChange={handleChange} id="businessContactFirstName" placeholder="Enter first name" className="bg-[#F4F4F6]" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="businessContactLastName" className="">
                     Last Name
                   </Label>
-                  <Input onChange={handleChange} id="businessContactLastName" placeholder="Enter last name" className="bg-[#F4F4F6]" />
+                  <Input required onChange={handleChange} id="businessContactLastName" placeholder="Enter last name" className="bg-[#F4F4F6]" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="businessContactEmail" className="">
                     Business Contact Email
                   </Label>
-                  <Input onChange={handleChange} id="businessContactEmail" type="email" placeholder="Enter email" className="bg-[#F4F4F6]" />
+                  <Input required onChange={handleChange} id="businessContactEmail" type="email" placeholder="Enter email" className="bg-[#F4F4F6]" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="phoneNumber" className="]">
                     Phone Number
                   </Label>
-                  <Input onChange={handleChange} id="phoneNumber" placeholder="Enter phone number" className="bg-[#F4F4F6]" />
+                  <Input required onChange={handleChange} id="phoneNumber" placeholder="Enter phone number" className="bg-[#F4F4F6]" />
                 </div>
               </div>
             </div>
           </div>
           <div>
-            <h2 className="mb-4 text-xl font-bold">Use Case</h2>
+            <h2 className="mb-4 text-xl font-bold">
+              Use Case
+            </h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
                 <Label htmlFor="useCaseCategories" className="">
                   Use Case Category
+                  <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
                 </Label>
-                <Select 
+                <Select required
                   id="useCaseCategories"
                   name="useCaseCategories"
-                  value={formValues.useCaseCategories}
                   onValueChange={handleSelectChange('useCaseCategories')}
                 >
                   <SelectTrigger>
@@ -243,8 +262,9 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="useCaseSummary" className="">
                 Use Case Summary
+                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
               </Label>
-              <Textarea
+              <Textarea required
                 id="useCaseSummary"
                 name="useCaseSummary"
                 onChange={handleChange}
@@ -256,17 +276,24 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="productionMessageSample" className="">
                 Message Sample
+                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
               </Label>
-              <Textarea onChange={handleChange} id="productionMessageSample" name="productionMessageSample" placeholder="Enter a sample message" rows={4} className="bg-[#F4F4F6]" />
+              <Textarea required 
+                id="productionMessageSample" 
+                name="productionMessageSample"
+                onChange={handleChange} 
+                placeholder="Enter a sample message"
+                rows={4} 
+                className="bg-[#F4F4F6]" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="opt-in-type" className="">
                 Opt-In Type
+                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
               </Label>
-              <Select 
+              <Select required
                 id="optInType" 
                 name="optInType"
-                value={formValues.optInType} 
                 onValueChange={handleSelectChange('optInType')}
               >
                 <SelectTrigger>
@@ -282,14 +309,20 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="optInImageUrls" className="">
                 Opt-In Image URL
+                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
               </Label>
-              <Input onChange={handleChange} id="optInImageUrls" name="optInImageUrls" placeholder="Enter an image URL" className="bg-[#F4F4F6]" />
+              <Input required onChange={handleChange} id="optInImageUrls" name="optInImageUrls" placeholder="Enter an image URL" className="bg-[#F4F4F6]" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="messageVolume" className="">
                 Monthly Messaging Volume
+                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
               </Label>
-              <Select id="messageVolume" name="messageVolume" onValueChange={handleSelectChange('messageVolume')} value={formValues.messageVolume}>
+              <Select required
+                id="messageVolume" 
+                name="messageVolume" 
+                onValueChange={handleSelectChange('messageVolume')}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select a monthly volume" />
                 </SelectTrigger>
@@ -303,8 +336,9 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="additionalInformation" className="">
                 Additional Information
+                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
               </Label>
-              <Textarea
+              <Textarea required
                 onChange={handleChange}
                 id="additionalInformation"
                 name="additionalInformation"
@@ -319,8 +353,13 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="phoneNumbers" className="">
                 Phone Numbers
+                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
               </Label>
-              <Select id="phoneNumbers" name="tollfreePhoneNumberSid" onValueChange={handleSelectChange('tollfreePhoneNumberSid')} value={formValues.tollfreePhoneNumberSid}>
+              <Select required
+                id="phoneNumbers" 
+                name="tollfreePhoneNumberSid" 
+                onValueChange={handleSelectChange('tollfreePhoneNumberSid')}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select phone numbers" />
                 </SelectTrigger>
@@ -332,6 +371,10 @@ export default function Component() {
                     )}
                   </SelectContent>
               </Select>
+              <p className="text-xs text-slate-500 max-w-xl">
+                <b>Note:</b> If a toll-free number is currently associated with a pending or rejected registration it will not populate here.
+                You will first have to delete the verification request in the Twilio console.
+              </p>
             </div>
           </div>
           <div>
@@ -339,8 +382,9 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="notificationEmail" className="">
                 Notifications Email
+                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
               </Label>
-              <Input
+              <Input required
                 onChange={handleChange}
                 id="notificationEmail"
                 name="notificationEmail"
@@ -351,7 +395,10 @@ export default function Component() {
             </div>
           </div>
           <div className="flex justify-end">
-            <Button type="submit" className="bg-[#121C2D] hover:bg-[#121C2D]/90">
+            <Button type="reset" className="bg-[#99CDFF] hover:bg-[#121C2D]/90 px-6 mx-4">
+              Clear Form
+            </Button>
+            <Button type="submit" className="bg-[#121C2D] hover:bg-[#121C2D]/90 px-6">
               Submit
             </Button>
           </div>
