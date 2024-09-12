@@ -124,14 +124,14 @@ export default function Component() {
               <div className="space-y-2">
                 <Label htmlFor="businessName" className="">
                   Business Name
-                  <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
+                  <TooltipWithIcon message="The end business the customer (end user) is engaging with." icon={Info} />
                 </Label>
                 <Input required onChange={handleChange} id="businessName" placeholder="e.g. Twilio Inc." className="bg-[#F4F4F6]" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="businessWebsite" className="">
                   Business Website
-                  <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
+                  <TooltipWithIcon message="The website of the end business or the website the consumer is engaging with." icon={Info} />
                 </Label>
                 <Input required onChange={handleChange} id="businessWebsite" placeholder="Enter business website" className="bg-[#F4F4F6]" />
               </div>
@@ -231,7 +231,7 @@ export default function Component() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="businessContactPhone" className="]">
-                    Phone Number
+                    Business Contact Phone Number
                   </Label>
                   <Input required onChange={handleChange} id="businessContactPhone" placeholder="Enter phone number" className="bg-[#F4F4F6]" />
                 </div>
@@ -246,7 +246,7 @@ export default function Component() {
               <div className="space-y-2">
                 <Label htmlFor="useCaseCategories" className="">
                   Use Case Category
-                  <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
+                  <TooltipWithIcon message="This should be the use case that best fits the types of messages being sent by this toll-free phone number." icon={Info} />
                 </Label>
                 <Select required
                   id="useCaseCategories"
@@ -267,7 +267,7 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="useCaseSummary" className="">
                 Use Case Summary
-                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
+                <TooltipWithIcon message="The explanation on how messaging is used on this toll-free phone number by the business or organization. The more detailed information you provide for the use case/summary the better." icon={Info} />
               </Label>
               <Textarea required
                 id="useCaseSummary"
@@ -281,7 +281,7 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="productionMessageSample" className="">
                 Message Sample
-                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
+                <TooltipWithIcon message="Refers to the production level sample message(s) that the end-business will be sending to the end-user/mobile handset." icon={Info} />
               </Label>
               <Textarea required 
                 id="productionMessageSample" 
@@ -294,7 +294,7 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="opt-in-type" className="">
                 Opt-In Type
-                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
+                <TooltipWithIcon message="Opt-in refers to the process of getting end-user permission to send them text messages. According to TCPA law, businesses must have 'express written consent' from the end-user before texting them." icon={Info} />
               </Label>
               <Select required
                 id="optInType" 
@@ -314,14 +314,14 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="optInImageUrls" className="">
                 Opt-In Image URL
-                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
+                <TooltipWithIcon message="You must demonstrate how consent to receive messaging is collected from the consumer. You must provide proof of consent collection via this OptInImageUrls parameter, which can contain a link to the web form, a hosted image file, or a link to a document that tells the story of the opt-in." icon={Info} />
               </Label>
               <Input required onChange={handleChange} id="optInImageUrls" name="optInImageUrls" placeholder="Enter an image URL" className="bg-[#F4F4F6]" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="messageVolume" className="">
                 Monthly Messaging Volume
-                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
+                <TooltipWithIcon message="The estimated monthly volume on the toll-free phone number referenced in the submission. Choose the closest value and if it increases, use the value of where you expect to be in 6 months." icon={Info} />
               </Label>
               <Select required
                 id="messageVolume" 
@@ -341,7 +341,7 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="additionalInformation" className="">
                 Additional Information
-                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
+                <TooltipWithIcon message="Any additional details (i.e., privacy policies, onboarding controls, etc…) that you want to add or that you believe will help with the verification such as privacy policies, AUPs, additional onboarding controls you have, links, etc." icon={Info} />
               </Label>
               <Textarea required
                 onChange={handleChange}
@@ -358,7 +358,7 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="businessContactPhones" className="">
                 Phone Numbers
-                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
+                <TooltipWithIcon message="Select the Toll-Free from your account's available inventory that you would like to have verified with this request." icon={Info} />
               </Label>
               <Select required
                 id="phoneNumbers" 
@@ -387,7 +387,7 @@ export default function Component() {
             <div className="space-y-2">
               <Label htmlFor="notificationEmail" className="">
                 Notifications Email
-                <TooltipWithIcon message="This is an info icon tooltip" icon={Info} />
+                <TooltipWithIcon message="A status update of your Toll-Free phone number verification request will be sent via an email notification to this email address." icon={Info} />
               </Label>
               <Input required
                 onChange={handleChange}

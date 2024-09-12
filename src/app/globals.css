@@ -79,6 +79,12 @@ label.text-sm > button {
   margin: 5px;
 }
 
+.bg-popover {
+  color: #fff;
+  background-color: #121C2D;
+  max-width: 50%;
+}
+
   h2 {
     color: #121C2D;
   }
