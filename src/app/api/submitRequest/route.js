@@ -50,16 +50,13 @@ export async function GET(request) {
     { limit: 50 }
   );
 
-  // TODO: Need to verify that numbers with a rejected verification are not deleted.
-  // A User may want to resubmit a new Verification Request so number needs to be displayed in form.
+  // Remove those numbers to display if they're currently associated
+  // with a verification request. This includes 'pending' or 'rejected' states.
   tollFreeRegistrations.forEach((i) => {
     if (tollFreeNumbers[i.tollfreePhoneNumberSid]) {
       delete tollFreeNumbers[i.tollfreePhoneNumberSid];
     }
   });
-
-  // Displays all toll free numbers
-  console.log(tollFreeNumbers);
 
   return NextResponse.json({message: tollFreeNumbers, success: true, error: false}, { status: 200 });
 }
