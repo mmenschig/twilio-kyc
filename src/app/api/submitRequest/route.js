@@ -50,7 +50,7 @@ export async function GET(request) {
     { limit: 50 }
   );
 
-  // Remove those numbers to display if they're currently associated
+  // This removes those numbers to display if they're currently associated
   // with a verification request. This includes 'pending' or 'rejected' states.
   tollFreeRegistrations.forEach((i) => {
     if (tollFreeNumbers[i.tollfreePhoneNumberSid]) {
